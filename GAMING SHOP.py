@@ -1,0 +1,558 @@
+from pyfiglet import Figlet
+f = Figlet(font="graffiti")
+print(f.renderText("Welcome to Games4u"))
+#This will print the title
+
+# Dictionary to store usernames and their passwords
+# first one = username, second one = password
+users = {
+    "vishan": "Vishan"
+}
+
+# This will ask them to log in
+def login():
+    # Number of login attempts allowed
+    attempts = 3
+
+    # Loop runs while the user still has attempts left
+    while attempts > 0:
+        # Ask the user for their username
+        username = input("Enter username: ")
+        # Ask the user for their password
+        password = input("Enter password: ")
+
+        # Check if the username exists AND the password matches
+        if username in users and users[username] == password:
+            print("ACCESS GRANTED")
+            # Return the logged-in username
+            return username
+        else:
+            # Reduce attempts after a failed login
+            attempts -= 1
+            print("Incorrect username or password.")
+            print("Attempts left:", attempts)
+
+  # Runs if the user uses all attempts
+    print("ACCESS DENIED")
+    exit()  # Stops the program
+
+# Store the logged-in user's username
+current_user = login()
+
+def save_receipt(username, items, quantities, prices, total, discount):
+    from pyfiglet import Figlet  # Import pyfiglet to create ASCII art headings
+    f = Figlet(font="graffiti")  # Set the font for the receipt headings
+
+    # VAT calculation
+    VAT_RATE = 0.20  # 20% VAT
+    VAT = total * VAT_RATE
+    total_with_vat = total + VAT - discount  # Final total after VAT and discount
+
+    # Open the receipt file for writing with UTF-8 encoding
+    # Using username in the filename to ensure each user has their own receipt
+    with open(f"{username}_receipt.txt", "w", encoding="utf-8") as receipt:
+        # Write a fancy "RECEIPT" heading using pyfiglet
+        receipt.write(f.renderText("RECEIPT") + "\n")  # ASCII art heading
+
+        # Loop through each ordered item and write its details
+        for i in range(len(items)):
+            unit_price = prices[i] / quantities[i]  # Calculate the unit price for the item
+            receipt.write(f"{items[i]}\n")  # Item name
+            receipt.write(f"  Quantity: {quantities[i]}\n")  # Quantity ordered
+            receipt.write(f"  Unit Price: £{unit_price:.2f}\n")  # Price per unit formatted to 2 decimals
+            receipt.write(f"  Item Total: £{prices[i]:.2f}\n\n")  # Total price for that item
+
+        # Write a separator line for clarity
+        receipt.write("----------------------------\n")
+
+        # Write subtotal, VAT, discount (if any), and final total
+        receipt.write(f"Subtotal: £{total:.2f}\n")  # Subtotal before VAT
+        receipt.write(f"VAT (20%): £{VAT:.2f}\n")  # VAT amount
+
+        if discount > 0:
+            receipt.write(f"Discount Applied: -£{discount:.2f}\n")  # Discount if used
+
+        # Final total including VAT and after discount
+        receipt.write(f"Final Total: £{total_with_vat:.2f}\n")
+
+        # Another separator for neatness
+        receipt.write("----------------------------\n")
+
+        # Friendly thank-you message
+        receipt.write("Thank you for shopping with us!\n")
+    
+
+# Loop keeps showing the menu until the user logs out or places an order
+while True:
+    print("\n1) Place an order")
+    print("2) View my receipt")
+    print("3) Logout")
+
+    # Ask the user to choose an option
+    choice = input("Choose an option: ")
+
+    if choice == "1":
+        # Breaks the loop and continues to the ordering system
+        break
+
+
+
+    elif choice == "2":
+# i have used a elif statement so if they choose "2" they will see thier reciept 
+        print("\n--- YOUR RECEIPT ---")
+##this will print the reciept text
+        try:
+
+            with open(f"{current_user}_receipt.txt", "r", encoding="cp1252") as receipt:
+##this opens the reciept text file
+                print(receipt.read())
+
+        except FileNotFoundError:
+
+            print("No receipt found. Please place an order first.")
+
+    elif choice == "3":
+        # Logs the user out and exits the program
+        print("Logged out. Goodbye!")
+        exit()
+
+    else:
+        break
+        # Runs if the user enters
+
+
+
+print("Welcome to Games4u")
+#I am telling them welcome to my website
+while True:
+    #A while true will run the loop forever until it breaks
+    name = input("What's your name? ")
+
+    if name.isalpha():
+# Checks that the name contains only letters
+        break
+    #It will break if they input the correct letters and not numbers etc
+    else:
+        print("Invalid name. Please use letters only.")
+
+#This will ask how old they are
+happy = input("Hello " + name + " how are you today:  ")
+#I am asking the person if they are happy
+if happy == "happy":
+    print("That's good I'm so glad you're happy!")
+elif happy == "Happy":
+    print("That's good I'm so glad you're happy!")
+elif happy == "good":
+    print("That's good")
+#I have placed an IF statement that if they are happy/good it will be a positive comment
+elif happy == "unhappy":
+    print("Oh no, poor you, Im sorry to hear that!")
+elif happy == "sad":
+    print("Oh no, poor you, Im sorry to hear that!")
+#If they say no it will be a supportive comment
+
+
+while True:
+    # This loop will keep running until the user enters a valid email
+    email = input("What is your Email: ")
+
+    # Check if the email contains both "@" and "."
+    if "@" in email and "." in email and ".com":
+        # If the condition is true, stop the loop
+        break
+    else:
+        # If the email does not contain "@" and ".", tell the user it's invalid
+        print("Invalid email format")
+
+print(email)
+
+while True:
+    # Keeps asking until the user enters something
+    address = input("What is your Address: ")
+
+    # Check that the address is not empty
+    if address.strip() != "":
+        # Stop the loop if the address is valid, .strip will remove extra spaces from the beginning and the end of a string.
+        break
+    else:
+        # Tell the user the address is invalid
+        print("Please enter a valid address.")
+
+# If they put an invalid address it will not go through
+while True:
+     # Keeps asking until the user enters a postcode
+    postcode = input("What is your Post Code: ").upper()
+ # Check that the postcode is not empty
+    if len(postcode) >= 5 and " " in postcode:
+        break
+    else:
+        print("Invalid postcode. Example: B1 1AA")
+ # Stop the loop if the postcode is valid, .strip will remove extra spaces from the beginning and the end of a string.
+
+        # break the code if it is correct
+
+
+while True:
+# Keeps asking until a valid phone number is entered
+    PhoneNumber = input("What is your Phone Number: ")
+# Asks the user to enter their phone number
+
+
+    if PhoneNumber.isdigit() and len(PhoneNumber) == 11:
+        # Checks that the input contains only numbers and is exactly 11 digits long, .isdigit checks if a string/character contains only numbers
+        break
+        # Stops the loop if the phone number is valid
+    else:
+        print("Invalid phone number.")
+        # Error message if input is incorrect
+
+
+
+
+
+newOrder = "yes"
+# I created a variable to check if the user wants to place another order
+orderCount = 0
+# I created a variable to count how many orders the user has made
+finalTotal = 0
+# I created a variable to store the final total price of all orders
+subTotal = 0
+# I created a variable to store the total price for the current order
+
+
+
+items = []
+prices = []
+quantities = []
+# Use lists to store multiple orders, These are 1-dimensional arrays
+
+# This loop will keep running while the user wants to order
+# and while they have not ordered more than 6 games
+while newOrder.lower() == "yes" and orderCount < 6:
+
+    # Display the list of available games
+    print("Please select the items you wish to order:")
+    print("1. GTA [PS4] - £40.00")
+    print("2. FC26 [PS5] - CrossPlay Edition - £60.00")
+    print("3. Red Dead Redemption 2 [PS4] - £30.00")
+    print("4. GTA [PS5] - £50.00")
+    print("5. Red Dead Redemption 2 [PS5] - £55.00")
+    print("6. FC26 [PS5] - £50.00")
+
+    # Ask the user which game they want
+    # try is used to stop the program crashing if they type letters instead of numbers
+    try:
+        order = int(input("Enter the number of the game you want: "))
+        # Ask how many copies they would like
+        quantity = int(input("How many copies would you like? "))
+    except ValueError:
+        # This runs if the user enters something that is not a number
+        print("Please enter valid numbers.")
+        # continue sends the loop back to the beginning
+        continue
+
+    # Process the user's selection
+
+    # If they choose option 1
+    if order == 1:
+        print("You selected GTA [PS4]")
+        # Add the game name to the items list
+        items.append("GTA [PS4]")
+        # Store the quantity ordered
+        quantities.append(quantity)
+        # Multiply price by quantity and store it
+        prices.append(40 * quantity)
+
+    # If they choose option 2
+    elif order == 2:
+        # Ask if they want crossplay edition
+        crossPlay = input("Do you want cross play for an extra £10? (Yes or No) ")
+
+        if crossPlay.lower() == "yes":
+            print("You selected FC26 [PS5] - CrossPlay Edition")
+            items.append("FC26 [PS5] - CrossPlay Edition")
+            quantities.append(quantity)
+            # Crossplay costs £60 per copy
+            prices.append(60 * quantity)
+        else:
+            print("You selected FC26 [PS5]")
+            items.append("FC26 [PS5]")
+            quantities.append(quantity)
+            # Standard edition costs £50 per copy
+            prices.append(50 * quantity)
+
+    # If they choose option 3
+    elif order == 3:
+        print("You selected Red Dead Redemption 2 [PS4]")
+        items.append("Red Dead Redemption 2 [PS4]")
+        quantities.append(quantity)
+        prices.append(30 * quantity)
+
+    # If they choose option 4
+    elif order == 4:
+        print("You selected GTA [PS5]")
+        items.append("GTA [PS5]")
+        quantities.append(quantity)
+        prices.append(50 * quantity)
+
+    # If they choose option 5
+    elif order == 5:
+        print("You selected Red Dead Redemption 2 [PS5]")
+        items.append("Red Dead Redemption 2 [PS5]")
+        quantities.append(quantity)
+        prices.append(55 * quantity)
+
+    # If they choose option 6
+    elif order == 6:
+        print("You selected FC26 [PS5]")
+        items.append("FC26 [PS5]")
+        quantities.append(quantity)
+        prices.append(50 * quantity)
+
+    # If the user enters a number not on the menu
+    else:
+        print("Invalid selection, try again.")
+        # continue restarts the loop
+        continue
+
+    # Increase the number of orders made
+    orderCount += 1
+
+    # Recalculate the final total after each order
+    finalTotal = sum(prices)
+
+    # Ask if they want to order another game
+    newOrder = input("Do you want to order another game? (yes or no) ")
+  #this will ask if they want another game and it will loop back to the games
+
+print("\nOrder Summary:")
+# this will display final order summary
+for i in range(len(items)):
+    print(f"{items[i]} - £{prices[i]:.2f}")
+print(f"Final Total: £{finalTotal:.2f}")
+#i have used different if and elif statements to show the prices and games also 2.f displays the total cost nicely with 2 decimal places
+
+
+
+# This will calcualte the unit_price and the quantity to give an overall answer
+# I will calculate the total cost of all items
+Total = sum(prices)  # add up all the prices
+print("Total cost: £", Total)  # print total
+
+print("-----------------------------------------------------")
+print("\n" + f.renderText("Receipt"))
+# this will display the receipt name
+# I am printing headings
+print("Item Name       Unit Cost     Quantity     Total")
+print("-----------------------------------------------------")
+# this will display the item name, unit cosr, quantity etc
+# This will go through each item
+for i in range(len(items)):
+    # This will calculate the unit price by quantity
+    unit_price = prices[i] / quantities[i]
+    # this will Print the item info
+    print(items[i], "   £", unit_price, "       ", quantities[i], "       £", prices[i])
+
+# this will Print total at the end
+print("-----------------------------------------------------")
+print("\n" + f.renderText("payment"))
+print("Overall Total: £", Total)
+
+print(f"Total price: £{Total:.2f}")
+
+#VAT
+VAT_RATE = 0.20
+VAT = Total * VAT_RATE
+Total_with_VAT = Total + VAT
+#I have added VAT to my code
+
+print(f"VAT (20%): £{VAT:.2f}")
+print(f"Total including VAT: £{Total_with_VAT:.2f}")
+#This prints the total price including VAT, also formatted to 2 decimal places
+
+
+# Start with no discount applied
+
+# ===== CONFIRMATION SCREEN =====
+while True:
+    confirm = input("Confirm order? (yes/no): ")
+
+    if confirm.lower() == "yes":
+        break
+    elif confirm.lower() == "no":
+        print("Order cancelled.")
+        continue
+    else:
+        print("Please type yes or no.")
+
+
+# Goes back to the start of the ordering loop
+
+# ===== DISCOUNT SECTION =====
+discount = 0  # Start with no discount
+
+# Ask user for a discount code
+code = input("Enter discount code (or press Enter to skip): ")
+
+# Check if the code is valid
+if code == "SAVE10":
+    discount = 10  # £10 discount
+    print("Discount applied: £10 OFF")
+elif code == "VISHAN25":
+    discount = 25  # £25 discount
+    print("Discount applied: £25 OFF")
+else:
+    print("No discount applied")
+
+# Subtract discount from total BEFORE calculating VAT
+Total = Total - discount
+
+# Make sure total doesn't go below 0
+if Total < 0:
+    Total = 0
+
+# Show new total after discount
+print(f"New total after discount: £{Total:.2f}")
+
+# ===== VAT CALCULATION =====
+# VAT is calculated AFTER discount is applied
+VAT_RATE = 0.20  # 20% VAT rate
+VAT = Total * VAT_RATE  # Calculate VAT based on updated total
+
+# Add VAT to get final total price
+Total_with_VAT = Total + VAT
+
+# Display VAT and final total
+print(f"VAT (20%): £{VAT:.2f}")
+print(f"Total including VAT: £{Total_with_VAT:.2f}")
+
+while True:
+    try:
+        payment = float(input("How much would you like to pay? £"))
+    except ValueError:
+        print("Please enter a valid number.")
+        continue
+#i have added a while loop
+    if payment > Total_with_VAT:
+        change = payment - Total_with_VAT
+        print(f"You paid: £{payment:.2f}")
+        print(f"Your change is: £{change:.2f}")
+        print("Thank you for your order!")
+#i have added a conditional statement which is an if statement
+        save_receipt(current_user, items, quantities, prices, Total, discount)
+
+        break
+#i added a break so it will move on
+    elif payment == Total_with_VAT:
+        print(f"You paid: £{payment:.2f}")
+        print("Payment complete. Thank you!")
+
+        save_receipt(current_user, items, quantities, prices, Total, discount)
+# this will save my receipt
+        break
+#i added a break so it will move on
+    else:
+        amount_owed = Total_with_VAT - payment
+        print(f"You paid: £{payment:.2f}")
+        print(f"You still owe: £{amount_owed:.2f}")
+        print("Please pay the remaining amount.")
+
+#========= END MENU =========
+while True:
+    print("\nWhat would you like to do next?")
+    print("1) Place another order")
+    print("2) View your receipt again")
+    print("3) Exit")
+# this will ask if they want to place another order etc
+    end_choice = input("Choose an option: ")
+
+    if end_choice == "1":
+        print("\nTaking you back to the ordering menu...\n")
+        # Restart ONLY the ordering section
+        # Reset order lists and totals
+        items = []
+        prices = []
+        quantities = []
+        orderCount = 0
+        newOrder = "yes"
+#i have used a 1-d array 
+        # Re-run the ordering loop
+        while newOrder.lower() == "yes" and orderCount < 6:
+            print("Please select the items you wish to order:")
+            print("1. GTA [PS4] - £40.00")
+            print("2. FC26 [PS5] - CrossPlay Edition - £60.00")
+            print("3. Red Dead Redemption 2 [PS4] - £30.00")
+            print("4. GTA [PS5] - £50.00")
+            print("5. Red Dead Redemption 2 [PS5] - £55.00")
+            print("6. FC26 [PS5] - £50.00")
+#this will ask what game they want to purchase 
+            try:
+                order = int(input("Enter the number of the game you want: "))
+                quantity = int(input("How many copies would you like? "))
+            except ValueError:
+                print("Please enter valid numbers.")
+                continue
+            if order == 1:
+                items.append("GTA [PS4]")
+                quantities.append(quantity)
+                prices.append(40 * quantity)
+
+            elif order == 2:
+                crossPlay = input("Do you want cross play for an extra £10? (Yes or No) ")
+                if crossPlay.lower() == "yes":
+                    items.append("FC26 [PS5] - CrossPlay Edition")
+                    quantities.append(quantity)
+                    prices.append(60 * quantity)
+                else:
+                    items.append("FC26 [PS5]")
+                    quantities.append(quantity)
+                    prices.append(50 * quantity)
+
+            elif order == 3:
+                items.append("Red Dead Redemption 2 [PS4]")
+                quantities.append(quantity)
+                prices.append(30 * quantity)
+
+            elif order == 4:
+                items.append("GTA [PS5]")
+                quantities.append(quantity)
+                prices.append(50 * quantity)
+
+            elif order == 5:
+                items.append("Red Dead Redemption 2 [PS5]")
+                quantities.append(quantity)
+                prices.append(55 * quantity)
+
+            elif order == 6:
+                items.append("FC26 [PS5]")
+                quantities.append(quantity)
+                prices.append(50 * quantity)
+
+            else:
+                print("Invalid selection, try again.")
+                continue
+
+            orderCount += 1
+
+            newOrder = input("Do you want to order another game? (yes or no) ")
+#this will ask if they want another game
+        print("\nOrder complete! Your new receipt has been saved.")
+    
+
+    elif end_choice == "2":
+        try:
+            with open(f"{current_user}_receipt.txt", "r") as receipt:
+                print("\n" + f.renderText("RECEIPT"))
+                print(receipt.read())
+        except FileNotFoundError:
+            print("No receipt found.")
+
+    elif end_choice == "3":
+        print("Thank you for using Games4u! Goodbye!")
+        exit()
+
+    else:
+        print("Invalid choice. Please choose 1, 2, or 3.")
+
+
+
